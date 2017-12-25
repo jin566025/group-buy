@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="content-Type" content="text/html;charset=utf-8"> 
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="description" content="新海集团内部团购" />
+		<meta name="author" content="金橙天" />
+		<title>立即加购</title>
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/immbuy.css" />
+	</head>
+	<body>
+		<div class="head">
+			<img src="img/head.jpg" />
+		</div>
+		<div class="info">
+			<div class="info-group">
+				<div class="info-group-left">微信号：</div>
+				<div class="info-group-right">傻瓜瓜</div>
+			</div>
+			<div class="info-group">
+				<div class="info-group-left">工号：</div>
+				<div class="info-group-right">888888</div>
+			</div>
+			<div class="info-group">
+				<div class="info-group-left">部门：</div>
+				<div class="info-group-right">商务智能部</div>
+			</div>
+			<div class="info-group">
+				<div class="info-group-left">电话：</div>
+				<div class="info-group-right">13575546447</div>
+			</div>
+		</div>
+		
+		<div class="info info2">
+			<div class="product-img">
+				<img  src="img/test.jpg" />
+			</div>
+			<div class="product-name">3条小松鼠</div>
+			
+			<div class="cacl">
+				<div class="reduce cacl-div">-</div>
+				<input class="cacl-div pro-num" type="text" value="1" />
+				<div class="add cacl-div">+</div>
+			</div>
+		
+			<div class="info-group">
+				<div class="info-group-left">原价：</div>
+				<div class="info-group-right"><a class="yuanjia">120</a>元</div>
+			</div>
+			<div class="info-group">
+				<div class="info-group-left">团购优惠：</div>
+				<div class="info-group-right"><a class="youhui">15</a>元</div>
+			</div>
+			<div class="info-group">
+				<div class="info-group-left">实际需付：</div>
+				<div class="info-group-right"><a class="shiji">105</a>元</div>
+			</div>
+
+		</div>
+		<div class="immybuy">立即抢购</div>
+		<div class="seat"></div>
+		<footer>
+		
+			<div class="footer-nav-container">
+				<div class="footer-nav footer-nav1" onclick="window.location.href='index.html'">
+					<img class="footer-icon" src="img/tuangou-active.png" />
+					<p class="navp nav-active">团购</p>
+				</div>
+				<div class="footer-nav footer-nav2" onclick="window.location.href='history.html'">
+					<img class="footer-icon" src="img/history.png" />
+					<p class="navp">历史订单</p>
+				</div>
+				<div class="footer-nav footer-nav3" onclick="window.location.href='person.html'">
+					<img class="footer-icon" src="img/person.png" />
+					<p class="navp">个人中心</p>
+				</div>
+			</div>
+			
+		</footer>
+		<div class="hide">
+			<a id="yuanjia">120</a>
+			<a id="youhui">15</a>
+			<a id="shiji">105</a>
+		</div>
+		
+		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<script>
+			function cacl(pro_num){
+				var yuanjia = parseInt($("#yuanjia").text());
+				var youhui = parseInt($("#youhui").text());
+				var shiji = parseInt($("#shiji").text());
+				yuanjia = yuanjia*pro_num;
+				shiji = shiji*pro_num;
+				youhui = yuanjia-shiji;
+
+				$(".yuanjia").html(yuanjia);
+				$(".youhui").html(youhui);
+				$(".shiji").html(shiji);
+			}
+			$(function(){
+				
+				$(".add").click(function(){
+					var pro_num =parseInt($(".pro-num").val());
+					if(pro_num<100){
+						pro_num = pro_num+1
+						cacl(pro_num);
+						$(".pro-num").val(pro_num)
+					}
+					
+				})
+				$(".reduce").click(function(){
+					var pro_num =parseInt($(".pro-num").val());
+					if(pro_num>1){
+						pro_num = pro_num-1
+						cacl(pro_num);
+						$(".pro-num").val(pro_num)
+					}
+					
+				})
+
+				$('.pro-num').bind('input propertychange', function() {  
+				    var pro_num = $(this).val();
+				    if(parseInt(pro_num)>100){
+				    	pro_num=100;
+				    	cacl(pro_num)
+				    }else if(parseInt(pro_num)<1){
+				    	pro_num=1;
+				    	cacl(pro_num);
+				    }else if(pro_num==""){
+				    	pro_num=1;
+				    	cacl(pro_num);
+				    	$(".pro-num").val(pro_num)
+				    }else{
+				    	cacl(pro_num);
+				    }
+					$(".pro-num").val(pro_num)
+				});  
+			})
+		</script>
+	</body>
+</html>

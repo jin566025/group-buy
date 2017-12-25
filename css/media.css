@@ -1,0 +1,24 @@
+@media screen and (max-width: 375px) {
+	.swiper-container2{
+		height: 20rem;
+	}
+}
+@media screen and (max-width: 360px){
+	.swiper-container2{
+		height: 16rem;
+	}
+}
+@media screen and (max-width: 320px) {
+	.swiper-container2{
+		height: 14rem;
+	}
+	.product-name{
+		height: 4rem;line-height: 4rem;
+	}
+	.tg-price{
+		font-size: 1.5rem;
+	}
+	.yuan-price{
+		font-size: 1rem;
+	}
+}

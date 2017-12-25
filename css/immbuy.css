@@ -1,0 +1,67 @@
+html,body{
+	overflow: scroll;
+}
+.head img{
+	border-radius: 50%;width: 30%;margin:1rem auto;display: block;
+}
+
+.info{
+	width: 80%;margin: 0 auto;padding: 3rem 0;background-color: #FFFFFF;border-radius: 5px;
+}
+
+.info-group:after{
+	content: " ";
+	display: block;
+	clear: both;
+}
+.info-group-left{
+	float: left;width: 40%;text-align: right;
+}
+.info-group-right{
+	float: left;width: 60%;text-align: center;
+}
+.info-group{
+	padding: 1rem 0;
+}
+
+
+.info2{
+	margin-top: 1rem;
+}
+.product-img{
+	text-align: center;
+}
+.product-img img{
+	width: 50%;
+}
+
+.product-name{
+	text-align: center;font-size: 2rem;padding: 1rem 0;
+}
+.cacl{
+	text-align: center;padding: 1rem 0;
+}
+
+.cacl-div{
+	display:inline-block;text-align: center;border: none;width: 20%;
+}
+
+.add,.reduce{
+	width:2rem;height:2rem;background-color: #444444;color: #FFFFFF;line-height: 2rem;border-radius: 50%;font-size: 2rem;vertical-align: middle;
+}
+
+.cacl:after{
+	content: " ";
+	display: block;
+	clear: both;
+}
+
+.immybuy{
+	height: 3rem;line-height: 3rem;width: 80%;margin: 0 auto;text-align: center;background-color: #FFFFFF;border-radius: 5px;margin-top: 1rem;
+}
+
+
+
+.info-input{
+	text-align: center;
+}

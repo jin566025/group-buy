@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="content-Type" content="text/html;charset=utf-8"> 
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="description" content="新海集团内部团购" />
+		<meta name="author" content="金橙天" />
+		<title>用户反馈</title>
+		<link rel="stylesheet" href="css/main.css" />
+		<link rel="stylesheet" href="css/advice.css" />
+	</head>
+	<body>
+		<div class="advice">
+			<p class="tips">请输入你宝贵的意见</p>
+			<textarea class="textarea" placeholder="请输入意见内容" ></textarea>
+		</div>
+		<div class="submit">提交</div>
+		<div class="seat"></div>
+		<footer>
+		
+			<div class="footer-nav-container">
+				<div class="footer-nav footer-nav1" onclick="window.location.href='index.html'">
+					<img class="footer-icon" src="img/tuangou.png" />
+					<p class="navp">团购</p>
+				</div>
+				<div class="footer-nav footer-nav2" onclick="window.location.href='history.html'">
+					<img class="footer-icon" src="img/history.png" />
+					<p class="navp">历史订单</p>
+				</div>
+				<div class="footer-nav footer-nav3" onclick="window.location.href='person.html'">
+					<img class="footer-icon" src="img/person-active.png" />
+					<p class="navp nav-active">个人中心</p>
+				</div>
+			</div>
+			
+		</footer>
+		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<script>
+			$(function(){
+				$(".add").click(function(){
+					var pro_num =parseInt($(".pro-num").val());
+					if(pro_num<100){
+						pro_num++;
+					}
+					$(".pro-num").val(pro_num)
+				})
+				$(".reduce").click(function(){
+					var pro_num =parseInt($(".pro-num").val());
+					if(pro_num>1){
+						pro_num--;
+					}
+					$(".pro-num").val(pro_num)
+				})
+			})
+		</script>
+	</body>
+</html>
