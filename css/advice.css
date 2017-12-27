@@ -1,8 +1,8 @@
 .tips{
-	text-align: center;padding: 1rem 0;
+	text-align: center;padding:10px 0;
 }
 .advice{
-	width: 80%;margin-left:10%;background-color: #FFFFFF;padding: 1rem 0;border-radius: 5px;margin-top: 3rem;
+	width: 80%;margin-left:10%;background-color: #FFFFFF;padding:10px 0;border-radius: 5px;margin-top: 30px;
 	/*
 	 * 
 	
@@ -10,8 +10,8 @@
 	 */
 }
 .textarea{
-	resize: none;width: 80%;margin-left: 10%;height: 15rem;border: 2px solid #899DC1;border-radius: 5px;
+	resize: none;width: 80%;margin-left: 10%;height: 150px;border: 2px solid #899DC1;border-radius: 5px;text-indent: 1em;
 }
 .submit{
-	height: 3rem;line-height: 3rem;border-radius: 5px;background-color: #FFFFFF;text-align: center;width: 80%;margin: 3rem auto 0 auto;
+	height: 40px;line-height:40px;border-radius: 5px;background-color: #FFFFFF;text-align: center;width: 80%;margin: 20px auto 0 auto;
 }

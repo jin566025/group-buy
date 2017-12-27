@@ -1,31 +1,31 @@
 .info-group-left,.info-input{
-	padding: 0.5rem 0;border-radius: 5px;
+	padding:10px 0;border-radius: 5px;
 }
 .info-input{
 	border: 1px solid gainsboro;
 }
 .info-group-right{
-	padding: 0.5rem 0;
+	padding:10px 0;
 }
 .info-group-right{
 	width: 45%;float: right;margin-right: 5%;
 }
 .change{
-	margin-top: 3rem;
+	margin-top: 20px;
 }
 .fankui{
-	position: absolute;top: 1rem;right: 10%;display: inline-block;padding: 0.5rem 1rem ;background-color: #FFFFFF;border-radius: 5px;font-size: 1rem;
+	position: absolute;top: 10px;right: 10%;display: inline-block;padding:3px 8px ;background-color: #FFFFFF;border-radius: 5px;
 }
 .fankui-main{
-	position: relative;
+	position: relative;font-size: 12px;
 }
 
 .fankui img,.fankui a{
-	height: 1.5rem;display: inline-block;vertical-align: middle;
+	height: 15px;display: inline-block;vertical-align: middle;
 }
 .head{
-	margin-top: 5rem;
+	margin-top: 30px;
 }
 .info{
-	margin-top: 2rem;
+	margin-top: 5px;
 }

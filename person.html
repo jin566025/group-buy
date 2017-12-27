@@ -7,6 +7,8 @@
 		<meta name="description" content="新海集团内部团购" />
 		<meta name="author" content="金橙天" />
 		<title>个人中心</title>
+		<link rel="stylesheet" href="css/jquery-weui.min.css" />
+		<link rel="stylesheet" href="css/weui.min.css" />
 		<link rel="stylesheet" href="css/main.css" />
 		<link rel="stylesheet" href="css/immbuy.css" />
 		<link rel="stylesheet" href="css/person.css" />
@@ -25,27 +27,27 @@
 		<div class="info">
 			<div class="info-group">
 				<div class="info-group-left">微信号：</div>
-				<div class="info-group-right">傻瓜瓜</div>
+				<div class="info-group-right nick_name"></div>
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">工号：</div>
-				<input class="info-input info-group-right" type="text" value="820008" />
+				<input class="info-input info-group-right company_id" type="text" value="" />
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">部门：</div>
-				<input class="info-input info-group-right" type="text" value="商务智能部" />
+				<input class="info-input info-group-right department" type="text" value="" />
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">电话：</div>
-				<input class="info-input info-group-right" type="text" value="13575546447" />
+				<input class="info-input info-group-right mobile" type="text" value="" />
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">工作地点：</div>
-				<input class="info-input info-group-right" type="text" value="文化商务区" />
+				<input class="info-input info-group-right work_address" type="text" value="" />
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">姓名：</div>
-				<input class="info-input info-group-right" type="text" value="你大爷" />
+				<input class="info-input info-group-right true_name" type="text" value="" />
 			</div>
 		</div>
 		
@@ -70,6 +72,7 @@
 			
 		</footer>
 		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<script type="text/javascript" src="js/url.js" ></script>
 		<script>
 			$(function(){
 				$(".add").click(function(){
@@ -85,6 +88,52 @@
 						pro_num--;
 					}
 					$(".pro-num").val(pro_num)
+				})
+				
+				$.ajax({
+					type:"post",
+					url:url_path+"/api/get_member_info",
+					dataType:"json",
+					data:{
+						"member_id":member_id
+					},
+					success:function(data){
+						if(data.error_msg=="成功"){
+							var member_info = data.data;
+							$(".nick_name").html(member_info.nick_name);
+							$(".company_id").val(member_info.company_id);
+							$(".department").val(member_info.department);
+							$(".mobile").val(member_info.mobile);
+							$(".work_address").val(member_info.work_address);
+							$(".true_name").val(member_info.true_name);
+					
+						}
+					},
+					error:function(){}
+					
+				});
+				$(".change").click(function(){
+					$.ajax({
+						type:"post",
+						url:url_path+"/api/edit_member_info",
+						data:{
+							"member_id":member_id,
+							"company_id":$(".company_id").val(),
+							"department":$(".department").val(),
+							"mobile":$(".mobile").val(),
+							"work_address":$(".work_address").val(),
+							"true_name":$(".true_name").val()
+						},
+						dataType:"json",
+						success:function(data){
+							if(data.error_msg=="成功"){
+								$.alert("修改成功成功",function(){
+									window.location.href='person.html'
+								});
+							}
+						},
+						error:function(){}
+					});
 				})
 			})
 		</script>

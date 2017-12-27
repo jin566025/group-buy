@@ -6,7 +6,7 @@ html,body{
 }
 
 .info{
-	width: 80%;margin: 0 auto;padding: 3rem 0;background-color: #FFFFFF;border-radius: 5px;
+	width: 80%;margin: 0 auto;padding: 1rem 0;background-color: #FFFFFF;border-radius: 5px;
 }
 
 .info-group:after{
@@ -21,7 +21,7 @@ html,body{
 	float: left;width: 60%;text-align: center;
 }
 .info-group{
-	padding: 1rem 0;
+	padding:10px 0;
 }
 
 
@@ -57,7 +57,7 @@ html,body{
 }
 
 .immybuy{
-	height: 3rem;line-height: 3rem;width: 80%;margin: 0 auto;text-align: center;background-color: #FFFFFF;border-radius: 5px;margin-top: 1rem;
+	height:35px;line-height:35px;width: 80%;margin: 0 auto;text-align: center;background-color: #FFFFFF;border-radius: 5px;margin-top: 10px;
 }
 
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="jQuery.md5.js"></script>
+<script>
+        /* 定义GET方式 */
+        var $_GET = (function () {
+            var url = window.document.location.href.toString();
+            var u = url.split("?");
+            if (typeof (u[1]) == "string") {
+                u = u[1].split("&");
+                var get = {};
+                for (var i in u) {
+                    var j = u[i].split("=");
+                    get[j[0]] = j[1];
+                }
+                return get;
+            } else {
+                return {};
+            }
+        })();
+
+        console.log($_GET["privilege"]);
+
+        //固定值：find_wx_canteen   $_GET["privilege"]     MD5（privilege&key=xinhai）   POST
+
+        $.ajax({
+            url:"http://wcjava71.xinhaimobile.cn/api/company/work_add_wx.jsp",
+            type:"post",
+            dataType:"json",
+            data:{
+                "method":"find_wx_canteen",
+                "openid":$_GET["privilege"],
+                "token":$.md5($_GET["privilege"]+"&key=xinhai"),
+            },
+            success:function(e){
+                document.body.innerHTML=JSON.stringify(e);
+            }
+        })
+
+    </script>
+</html>

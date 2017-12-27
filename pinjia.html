@@ -7,6 +7,8 @@
 		<meta name="description" content="新海集团内部团购" />
 		<meta name="author" content="金橙天" />
 		<title>用户反馈</title>
+		<link rel="stylesheet" href="css/jquery-weui.min.css" />
+		<link rel="stylesheet" href="css/weui.min.css" />
 		<link rel="stylesheet" href="css/main.css" />
 		<link rel="stylesheet" href="css/advice.css" />
 		<link rel="stylesheet" href="css/pinjia.css" /> 
@@ -15,15 +17,15 @@
 		<div class="product">
 			<div class="product-container"/>
 				<div class="product-container-left">商品名称：</div>
-				<div class="product-container-right">小仙女100斤</div>
+				<div class="product-container-right goods_name"></div>
 			</div>
 			<div class="product-container"/>
 				<div class="product-container-left">下单时间：</div>
-				<div class="product-container-right textover">2017-13-31 35:00:00</div>
+				<div class="product-container-right textover create_time"></div>
 			</div>
 			<div class="product-container"/>
 				<div class="product-container-left">取货时间：</div>
-				<div class="product-container-right textover">2017-13-31 35:00:00</div>
+				<div class="product-container-right textover pick_time"></div>
 			</div>
 		</div>
 		<div class="advice">
@@ -62,6 +64,8 @@
 			
 		</footer>
 		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<script type="text/javascript" src="js/url.js" ></script>
+		<script type="text/javascript" src="js/jquery-weui.min.js" ></script>
 		<script>
 			$(function(){
 				$(".stars").click(function(){
@@ -75,6 +79,52 @@
 							$(stars[i]).removeClass("stars-checked")
 						}
 					}
+				})
+				var order_id = window.location.href.split("?")[1];
+				$.ajax({
+					type:"post",
+					url:url_path+"/api/get_order_detail",
+					data:{
+						"member_id":member_id,
+						"order_id":order_id
+					},
+					dataType:"json",
+					success:function(data){
+						if(data.error_msg=="成功"){
+							var goods = data.data;
+							console.log(goods)
+							$(".goods_name").html(goods.goods_name);
+							$(".create_time").html(goods.create_time);
+							$(".pick_time").html(goods.pick_time);
+						}
+					},
+					error:function(){}
+				});
+				$(".submit").click(function(){
+					var starts_array = $(".stars-checked");
+					console.log(starts_array.length)
+					$.ajax({
+						type:"post",
+						dataType:"json",
+						url:url_path+"api/comment",
+						data:{
+							"member_id":member_id,
+							"order_id":order_id,
+							"content":$(".textarea").val(),
+							"star":starts_array.length
+						},
+						success:function(data){
+
+							if(data.error_msg=="成功"){
+								$.alert("评价成功",function(){
+									window.location.href='history.html'
+								});
+							}
+						},
+						error:function(){
+							
+						}
+					})
 				})
 			})
 		</script>

@@ -36,6 +36,7 @@
 			
 		</footer>
 		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<script type="text/javascript" src="js/url.js" ></script>
 		<script>
 			$(function(){
 				$(".add").click(function(){
@@ -52,6 +53,24 @@
 					}
 					$(".pro-num").val(pro_num)
 				})
+				$(".submit").click(function(){
+					$.ajax({
+						type:"post",
+						dataType:"json",
+						data:{
+							"member_id":member_id,
+							"content":$(".textarea").val()
+						},
+						url:url_path+"/api/feedback",
+						success:function(data){
+							if(data.error_msg=="成功"){
+								alert("提交成功")
+							}
+						},
+						error:function(){}
+					})
+				})
+				
 			})
 		</script>
 	</body>
