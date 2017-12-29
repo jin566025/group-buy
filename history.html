@@ -11,6 +11,26 @@
 		<link rel="stylesheet" href="css/weui.min.css" />
 		<link rel="stylesheet" href="css/main.css" />
 		<link rel="stylesheet" href="css/history.css" />
+		<style>
+			.main-confirm{
+				width: 300px;position: fixed;top: 50%;transform: translateY(-50%) translateX(-50%);left: 50%;background-color: #FFFFFF;display: none;z-index: 999;
+			}
+			.goods_name{
+				padding: 30px 0;font-size: 16px;text-align: center;
+			}
+			.confirm-left,.confirm-right{
+				width: 50%;height: 50px;line-height: 50px;position: absolute;text-align: center;
+			}
+			.confirm-left{
+				border-right: 1px solid gainsboro;color: #3cc51f;
+			}
+			.confirm-right{
+				right: 0;
+			}
+			.confirm{
+				width: 100%;position: relative;border-top: 1px solid gainsboro;height: 50px;
+			}
+		</style>
 	</head>
 	<body>
 		<header>如需修改订单请联系我们，电话：635556</header>
@@ -54,27 +74,33 @@
 		</footer>
 		
 		<div class="shadow"></div>
-		<div class="erweima">
-			<img src="img/testerweima.jpg" />
+		<!--<div class="erweima" id="qrcode">
+			
+		</div>-->
+			
+			
+		<div class="main-confirm">
+			<p class="goods_name">aaa</p>
+			<div class="confirm">
+				<div class="confirm-left">确认收货</div>
+				<div class="confirm-right">取消</div>
+			</div>
 		</div>
+		<!--<div class="code-info">{order_id:order_id,member_id:member_id}</div>-->
 		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
 		<script type="text/javascript" src="js/jquery-weui.min.js" ></script>
 		<script type="text/javascript" src="js/url.js" ></script>
+		<script type="text/javascript" src="js/qrcode.min.js" ></script>
 		<script>
 			$(function(){
-				var bodyWidth = $(window).width();
-				var erweimaWidth = $(".erweima").width();
-				$(".erweima").css("left",(bodyWidth-erweimaWidth)/2+"px");
 				
-				$(".shadow,.erweima").click(function(){
-					$(".erweima").fadeOut(500);
+				
+				$(".shadow,.erweima,.confirm-right").click(function(){
+					$(".main-confirm").fadeOut(500);
 					$(".shadow").fadeOut(500)
 				})
 				
-				$(".lookup").click(function(){
-					$(".erweima").fadeIn(500);
-					$(".shadow").fadeIn(500)
-				})
+				
 				
 				$.ajax({
 					type:"post",
@@ -103,7 +129,7 @@
 									cls = "yfk"
 								}else if(orders[i].status=="3"){
 									str = "已发货"
-									str2 = "查看订单";
+									str2 = "去收货";
 									cls = "yfh"
 								}else if(orders[i].status=="4"){
 									str = "已完成"
@@ -152,18 +178,78 @@
 					var orderid = $(this).data("orderid");
 					window.location.href='pinjia.html?'+orderid
 				})
-				$(".main").on("click",".yfh",function(){
+				$(".main").on("click",".ypj",function(){
 					var orderid = $(this).data("orderid");
 					window.location.href='myOrderDetail.html?'+orderid
 				})
+				$(".main").on("click",".yfh",function(){
+					$(".main-confirm").fadeIn(500);
+					$(".shadow").fadeIn(500);
+					var orderId = $(this).data("orderid");
+//					var order = {}
+//					order.orderId=orderId;
+//					order.member_id=member_id;
+//					$(".code-info").html("{orderId:"+orderId+","+"member_id："+member_id+"}")
+//					var order = $(".code-info").text();
+//					var orders2 = JSON.stringify(order)
+//					console.log(orders2)
+//					var url = "confirm.html?"+orderId+"?"+member_id
+//					makeCode(url)
+					$.ajax({
+						type:"post",
+						url:url_path+"/api/get_order_detail",
+						data:{
+							"member_id":member_id,
+							"order_id":orderId
+						},
+						dataType:"json",
+						success:function(data){
+							if(data.error_msg=="成功"){
+								var goods = data.data;
+								$(".confirm-left").data("orderid",orderId);
+								$(".confirm-left").attr("id",orderId)
+								$(".goods_name").html(goods.goods_name);
+
+							}
+						},
+						error:function(){}
+					});
+				})
+				$(".confirm-left").click(function(){
+					var order_id = $(this).attr("id");
+					console.log(order_id)
+					$.ajax({
+						type:"post",
+						url:url_path+"/api/confirm_receipt",
+						data:{
+							"member_id":member_id,
+							"order_id":order_id
+						},
+						dataType:"json",
+						success:function(data){
+							console.log(data)
+							window.location.href='history.html'
+						},
+						error:function(){}
+					});
+				})
 				$(document).on("click", ".yfk", function() {
-		        $.confirm("您确定要申请退款吗?", "确认退款", function() {
-		          //进入抢购页面
-		        }, function() {
-		          //取消操作
-		        });
-		      });
+			        $.confirm("您确定要申请退款吗?", "确认退款", function() {
+			          //进入抢购页面
+			        }, function() {
+			          //取消操作
+			        });
+			    });
+			    
 			})
+			function makeCode(order){
+				var qrcode = new QRCode(document.getElementById("qrcode"), {
+					width : 150,
+					height :150
+				});
+				qrcode.makeCode(order);
+			}
 		</script>
+
 	</body>
 </html>
