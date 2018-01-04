@@ -54,3 +54,7 @@ footer{
 .seat{
 	width: 100%;height:100px;
 }
+
+#myForm input,.myForm input{
+	display: none;
+}

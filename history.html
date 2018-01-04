@@ -48,7 +48,7 @@
 				<div class="section-container">
 					<div class="section-left status status1">已付款</div>
 					<div class="section-right">
-						<button class="pinjia yfk">申请退款</button>
+						<button class="pinjia yfk" data-orderid="12345">申请退款</button>
 					</div>
 				</div>
 			</section>-->
@@ -119,34 +119,90 @@
 								var str = "";
 								var str2 = "";
 								var cls="";
-								if(orders[i].status=="1"){
-									str = "待付款";
-									str2 = "去付款";
-									cls = "dfk"
-								}else if(orders[i].status=="2"){
-									str = "已付款";
-									str2 = "申请退款";
-									cls = "yfk"
-								}else if(orders[i].status=="3"){
-									str = "已发货"
-									str2 = "去收货";
-									cls = "yfh"
-								}else if(orders[i].status=="4"){
-									str = "已完成"
-									str2 = "去评价";
-									cls = "ywc"
-								}else if(orders[i].status=="5"){
-									str = "已评价"
-									str2 = "已评价";
-									cls = "ypj"
-								}
 								var pick_time;
 								if(orders[i].pick_time){
 									pick_time=orders[i].pick_time
 								}else{
 									pick_time=""
 								}
-								var html = '<section data-id='+orders[i].order_id+'>'+
+//								if(orders[i].status=="1"){
+//									str = "待付款";
+//									str2 = "去付款";
+//									cls = "dfk"
+//								}else if(orders[i].status=="3"){
+//									str = "已发货"
+//									str2 = "去收货";
+//									cls = "yfh"
+//								}else if(orders[i].status=="4"){
+//									str = "已完成"
+//									str2 = "去评价";
+//									cls = "ywc"
+//								}else if(orders[i].status=="5"){
+//									str = "已评价"
+//									str2 = "已评价";
+//									cls = "ypj"
+//								}else if(orders[i].status=="6"){
+//									str = "已退款"
+//									str2 = "已退款";
+//									cls = "ytk"
+//								}else if(orders[i].status=="2"){
+//									str = "已付款";
+//									str2 = "申请退款";
+//									cls = "yfk"
+//								}
+								
+								if(orders[i].status=="1"){
+									str = "待付款";
+//									str2 = "去付款";
+//									cls = "dfk"
+									var html = '<section data-id='+orders[i].order_id+'>'+
+												'<div class="section-container">'+
+													'<div class="section-left">商品名称：</div>'+
+													'<div class="section-right textover">'+orders[i].goods_name+'</div>'+
+												'</div>'+
+												'<div class="section-container">'+
+													'<div class="section-left">下单时间：</div>'+
+													'<div class="section-right" textover>'+orders[i].create_time+'</div>'+
+												'</div>'+
+												'<div class="section-container">'+
+													'<div class="section-left">取货时间：</div>'+
+													'<div class="section-right" textover>'+pick_time+'</div>'+
+												'</div>'+
+												'<div class="section-container">'+
+													'<div class="section-left status status1">'+str+'</div>'+
+													'<div class="section-right">'+
+														'<form class="myForm" action="http://wcphp172.xinhaimobile.cn/ixinhai_pay/pay/group_pay.php" method="post">'+
+															'<input type="text" name="member_id" class="member_id" value="" />'+
+															'<input type="text" name="order_id" class="order_id" value="" />'+
+															'<input type="text" name="return_url" class="return_url" value="http://yhj1.xinhaiip.cn/test/history.html" />'+
+															'<button class="pinjia '+cls+'" data-orderid='+orders[i].order_id+'>'+str2+'</button>'+
+														'</form>'+
+													'</div>'+
+												'</div>'+
+											'</section>';
+								}else{
+									if(orders[i].status=="2"){
+										str = "已付款";
+										str2 = "申请退款";
+										cls = "yfk"
+									}else if(orders[i].status=="3"){
+										str = "已发货"
+										str2 = "去收货";
+										cls = "yfh"
+									}else if(orders[i].status=="4"){
+										str = "已完成"
+										str2 = "去评价";
+										cls = "ywc"
+									}else if(orders[i].status=="5"){
+										str = "已评价"
+										str2 = "已评价";
+										cls = "ypj"
+									}else if(orders[i].status=="6"){
+										str = "已退款"
+										str2 = "已退款";
+										cls = "ytk"
+									}
+									var html = '<section data-id='+orders[i].order_id+'>'+
 												'<div class="section-container">'+
 													'<div class="section-left">商品名称：</div>'+
 													'<div class="section-right textover">'+orders[i].goods_name+'</div>'+
@@ -166,6 +222,8 @@
 													'</div>'+
 												'</div>'+
 											'</section>';
+								}
+								
 											
 								$(".main").append(html)
 							}
@@ -182,6 +240,29 @@
 					var orderid = $(this).data("orderid");
 					window.location.href='myOrderDetail.html?'+orderid
 				})
+				$(".main").on("click",".dfk",function(){
+					var orderId = $(this).data("orderid");
+					$(this).siblings(".member_id").val(member_id);
+					$(this).siblings(".order_id").val(orderId);
+
+					$(this).parent().submit();
+//					$.ajax({
+//						url:url_path+"/api/prepay",
+//        				type:"post",
+//        				dataType:"json",
+//        				data:{
+//        					"member_id":member_id,
+//        					"order_id":orderId,
+//        					"return_url":"history.html"
+//        				},
+//        				success:function(data){
+//        					console.log(data)
+//        				},
+//        				error:function(err){
+//        					console.log(err)
+//        				}
+//        			});
+				})
 				$(".main").on("click",".yfh",function(){
 					$(".main-confirm").fadeIn(500);
 					$(".shadow").fadeIn(500);
@@ -196,8 +277,8 @@
 //					var url = "confirm.html?"+orderId+"?"+member_id
 //					makeCode(url)
 					$.ajax({
-						type:"post",
 						url:url_path+"/api/get_order_detail",
+						type:"post",
 						data:{
 							"member_id":member_id,
 							"order_id":orderId
@@ -234,8 +315,26 @@
 					});
 				})
 				$(document).on("click", ".yfk", function() {
+					var order_id = $(this).data("orderid");
+					console.log(order_id)
 			        $.confirm("您确定要申请退款吗?", "确认退款", function() {
-			          //进入抢购页面
+			          //进入退款页面    
+			          $.ajax({
+			          	type:"post",
+			          	url:url_path+"/api/refund",
+			          	data:{
+			          		"member_id":member_id,
+			          		"order_id":order_id
+			          	},
+			          	dataType:"json",
+			          	success:function(data){
+			          		console.log(data)
+			          		if(data.error_msg=="成功"){
+			          			window.location.href='history.html'
+			          		}
+			          	},
+			          	error:function(){}
+			          });
 			        }, function() {
 			          //取消操作
 			        });

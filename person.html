@@ -31,11 +31,11 @@
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">工号：</div>
-				<input class="info-input info-group-right company_id" type="text" value="" />
+				<div class="info-group-right nick_name company_id"></div>
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">部门：</div>
-				<input class="info-input info-group-right department" type="text" value="" />
+				<div class="info-group-right nick_name department"></div>
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">电话：</div>
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 		
-		<div class="immybuy change">修改</div>
+		<button class="immybuy change">修改</button>
 		<div class="seat"></div>
 		<footer>
 		
@@ -72,6 +72,7 @@
 			
 		</footer>
 		<script type="text/javascript" src="js/jquery-3.2.1.js" ></script>
+		<script type="text/javascript" src="js/jquery-weui.min.js" ></script>
 		<script type="text/javascript" src="js/url.js" ></script>
 		<script>
 			$(function(){
@@ -98,11 +99,23 @@
 						"member_id":member_id
 					},
 					success:function(data){
+						console.log(member_id)
+						console.log(data)
+						
 						if(data.error_msg=="成功"){
+							
 							var member_info = data.data;
+							if(member_info.is_auth=="2" || member_info.is_auth=="0"){
+								$(".change").html("审核中").attr("disabled", true)
+							}else if(member_info.is_auth=="3"){
+								$(".change").html("审核通过").attr("disabled", true)
+							}
 							$(".nick_name").html(member_info.nick_name);
-							$(".company_id").val(member_info.company_id);
-							$(".department").val(member_info.department);
+							var company_id = sessionStorage.getItem("company_id");
+							var department = sessionStorage.getItem("department");
+							$(".company_id").html(company_id);
+							$(".department").html(department);
+							
 							$(".mobile").val(member_info.mobile);
 							$(".work_address").val(member_info.work_address);
 							$(".true_name").val(member_info.true_name);
@@ -112,6 +125,8 @@
 					error:function(){}
 					
 				});
+				
+				
 				$(".change").click(function(){
 					$.ajax({
 						type:"post",
@@ -127,7 +142,7 @@
 						dataType:"json",
 						success:function(data){
 							if(data.error_msg=="成功"){
-								$.alert("修改成功成功",function(){
+								$.alert("修改成功",function(){
 									window.location.href='person.html'
 								});
 							}

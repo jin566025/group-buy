@@ -63,8 +63,11 @@
 						},
 						url:url_path+"/api/feedback",
 						success:function(data){
+							console.log(data)
 							if(data.error_msg=="成功"){
 								alert("提交成功")
+							}else if(data.error_code=="1"){
+								alert(data.error_msg)
 							}
 						},
 						error:function(){}

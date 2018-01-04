@@ -57,7 +57,7 @@ html,body{
 }
 
 .immybuy{
-	height:35px;line-height:35px;width: 80%;margin: 0 auto;text-align: center;background-color: #FFFFFF;border-radius: 5px;margin-top: 10px;
+	height:35px;line-height:35px;width: 80%;margin: 0 auto;text-align: center;background-color: #FFFFFF;border-radius: 5px;margin-top: 10px;display: block;border: none;
 }
 
 

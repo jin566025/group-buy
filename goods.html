@@ -39,8 +39,13 @@
 				  <div class="weui-flex__item">实际需付</div>
 				  <div class="weui-flex__item"><a class="goods_price" id="goods_price"></a>元</div>
 				</div>
+				<form id="myForm" action="http://wcphp172.xinhaimobile.cn/ixinhai_pay/pay/group_pay.php" method="post">
+					<input type="text" name="member_id" id="member_id" value="" />
+					<input type="text" name="order_id" id="order_id" value="" />
+					<input type="text" name="return_url" id="return_url" value="http://yhj1.xinhaiip.cn/test/history.html" />
+					<a href="javascript:;" id='show-confirm' class="weui-btn weui-btn_primary">立即抢购</a>
+				</form>
 				
-				<a href="javascript:;" id='show-confirm' class="weui-btn weui-btn_primary">立即抢购</a>
 	    	</div>	
 	    </div>
 	    
@@ -143,8 +148,29 @@
 			          	},
 			          	dataType:"json",
 			          	success:function(data){
+			          			          		
+			          		console.log(data)
 			          		if(data.error_msg=="成功"){
-			          			window.location.href='index.html'
+			          			var order_id = data.data.order_id;
+			          			$("#member_id").val(member_id);
+			          			$("#order_id").val(order_id);
+			          			$("#myForm").submit();
+//			          			$.ajax({
+//			          				type:"post",
+//			          				url:url_path+"/api/prepay",
+//			          				data:{
+//			          					"member_id":member_id,
+//			          					"order_id":order_id,
+//			          					"return_url":"history.html"
+//			          				},
+//			          				dataType:"json",
+//			          				success:function(data){
+//			          					console.log(data)
+//			          				},
+//			          				error:function(){}
+//			          			});
+			          		}else if(data.error_code==1){
+			          			alert(data.error_msg)
 			          		}
 			          	},
 			          	error:function(){}

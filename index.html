@@ -58,7 +58,6 @@
 				success:function(data){
 					if(data.error_msg=="成功"){
 						var goods = data.data;
-						console.log(goods)
 						for(var i=0;i<goods.length;i++){
 							var html =   '<a class="weui-grid js_grid" data-goodId = '+goods[i].goods_id+' data-goodImg ='+goods[i].goods_images+' >'+
 										    '<div class="weui-grid__icon">'+
@@ -100,48 +99,85 @@
 			    }
 			})();
 			
+			
+			
+			
+			//登录
+			
+			
+			
 			//db3d1ecf8de781687a35b0e16a88ee47
 			//$_GET["privilege"]
-			var Privilege = "db3d1ecf8de781687a35b0e16a88ee47";
-			console.log(Privilege)
-			$.ajax({
-				url:"http://wcjava71.xinhaimobile.cn/api/company/work_add_wx.jsp",
-			    type:"post",
-			    dataType:"json",
-			    data:{
-			        "method":"find_wx_canteen",
-			        "openid":Privilege,
-			        "token":$.md5(Privilege+"&key=xinhai"),
-			    },
-			    success:function(data){
-			    	if(data.status=="yes"){
-			    		var privilege = data.user.privilege;
-//			    		sessionStorage.setItem("company_id",data.user.company_id)
-//	                	sessionStorage.setItem("department",data.user.department)
-//	                	sessionStorage.setItem("mobile",data.user.mobile)
-//	                	sessionStorage.setItem("nickname",data.user.nickname)
+//			var Privilege = "db3d1ecf8de781687a35b0e16a88ee47";
+//			$.ajax({
+//				url:"http://wcjava71.xinhaimobile.cn/api/company/work_add_wx.jsp",
+//			    type:"post",
+//			    dataType:"json",
+//			    data:{
+//			        "method":"find_wx_canteen",
+//			        "openid":Privilege,
+//			        "token":$.md5(Privilege+"&key=xinhai"),
+//			    },
+//			    success:function(data){
+//			    	console.log(data)
+//			    	if(data.status=="yes"){
+//			    		var openid = data.user.openid;
+//
 //	                	sessionStorage.setItem("openid",data.user.openid)
-//	                	sessionStorage.setItem("sex",data.user.sex)
-//	                	sessionStorage.setItem("union_id",data.user.union_id)
-	                	
-	                	$.ajax({
-	                		url:url_path+"/api/login",
-	                		type:"post",
-	                		dataType:"json",
-	                		data:{
-	                			"privilege":privilege
-	                		},
-	                		success:function(data){
-	                			sessionStorage.setItem("head_portrait",data.data.head_portrait)
-	                			sessionStorage.setItem("head_portrait",data.data.member_id)
-	                		},
-	                		error:function(){}
-	                	})
-			    	}
-			    	
-			    },
-			    error:function(){}
-			});
+//
+//	                	
+//	                	
+//			    	}
+//			    	
+//			    },
+//			    error:function(){}
+//			});
+			//http://wcphp172.xinhaimobile.cn/ixinhai_wechat/wechat_login_init.php?operation=info&callback=
+			//远程需要的登录
+			var openId = window.location.href.split("?")[1];
+			if(openId){
+				var openid = openId.split("=")[1];                     //从入口进来获取回调的openid
+				sessionStorage.setItem("openid",openid);
+				$.ajax({
+	        		url:url_path+"/api/login",
+	        		type:"post",
+	        		dataType:"json",
+	        		data:{
+	        			"openid":openid
+	        		},
+	        		success:function(data){
+	        			console.log("远程:")
+	        			console.log(data)
+	        			if(data.error_msg=="成功"){
+	        				sessionStorage.setItem("member_id",data.data.member_id)
+	        			}
+	        		},
+	        		error:function(){}
+	        	})
+				
+				//这里需要的登录
+				$.ajax({
+					url:"http://wcphp172.xinhaimobile.cn/ixinhai_wechat/wechat_user_post.php",
+	        		type:"post",
+	        		dataType:"json",
+	        		data:{
+	        			"openid":openid,
+	        			"request":"userinfoKey"
+	        		},
+	        		success:function(data){
+	        			console.log("这里:")
+	        			console.log(data);
+	        			sessionStorage.setItem("company_id",data[0].company_id)
+	        			sessionStorage.setItem("department",data[0].department)
+	        		},
+	        		error:function(err){
+	        			console.log(err)
+	        		}
+				})
+			}
+			
+			
+			
 		})
 		
 	</script>
