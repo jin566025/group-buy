@@ -22,7 +22,7 @@
 			
 		</div>
 		<div class="head">
-			<img src="img/head.jpg" />
+			<img class="head-img" src="img/head.jpg" />
 		</div>
 		<div class="info">
 			<div class="info-group">
@@ -110,15 +110,18 @@
 							}else if(member_info.is_auth=="3"){
 								$(".change").html("审核通过").attr("disabled", true)
 							}
-							$(".nick_name").html(member_info.nick_name);
+							
 							var company_id = sessionStorage.getItem("company_id");
 							var department = sessionStorage.getItem("department");
+							var headimgurl = sessionStorage.getItem("headimgurl");
+							var nickname = sessionStorage.getItem("nickname");
 							$(".company_id").html(company_id);
 							$(".department").html(department);
-							
+							$(".nick_name").html(nickname);
 							$(".mobile").val(member_info.mobile);
 							$(".work_address").val(member_info.work_address);
 							$(".true_name").val(member_info.true_name);
+							$(".head-img").attr("src",headimgurl);
 					
 						}
 					},
