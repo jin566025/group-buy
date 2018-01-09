@@ -59,7 +59,7 @@
 					if(data.error_msg=="成功"){
 						var goods = data.data;
 						for(var i=0;i<goods.length;i++){
-							var html =   '<a class="weui-grid js_grid" data-goodId = '+goods[i].goods_id+' data-goodImg ='+goods[i].goods_images+' >'+
+							var html =   '<a class="weui-grid js_grid" data-surplus_num='+goods[i].surplus_num+'  data-goodId = '+goods[i].goods_id+' data-goodImg ='+goods[i].goods_images+' >'+
 										    '<div class="weui-grid__icon">'+
 										      '<img src="'+goods[i].goods_images.split(",")[0]+'" alt="'+goods[i].goods_name+'">'+
 										    '</div>'+
@@ -77,7 +77,8 @@
 			$("#container").on("click",".weui-grid",function(){
 				var goods_id = $(this).data("goodid");
 				var goods_images = $(this).data("goodimg");
-
+				var surplus_num = $(this).data("surplus_num");
+				sessionStorage.setItem("surplus_num",surplus_num);
 				window.location.href = 'goods.html?'+goods_id+'?'+goods_images
 			})
 			

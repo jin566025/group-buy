@@ -31,11 +31,11 @@
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">工号：</div>
-				<div class="info-group-right nick_name company_id"></div>
+				<div class="info-group-right  company_id"></div>
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">部门：</div>
-				<div class="info-group-right nick_name department"></div>
+				<div class="info-group-right  department"></div>
 			</div>
 			<div class="info-group">
 				<div class="info-group-left">电话：</div>
@@ -105,7 +105,7 @@
 						if(data.error_msg=="成功"){
 							
 							var member_info = data.data;
-							if(member_info.is_auth=="2" || member_info.is_auth=="0"){
+							if(member_info.is_auth=="2"){
 								$(".change").html("审核中").attr("disabled", true)
 							}else if(member_info.is_auth=="3"){
 								$(".change").html("审核通过").attr("disabled", true)

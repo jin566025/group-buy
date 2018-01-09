@@ -119,6 +119,7 @@
 								var str = "";
 								var str2 = "";
 								var cls="";
+								var status="";
 								var pick_time;
 								if(orders[i].pick_time){
 									pick_time=orders[i].pick_time
@@ -153,8 +154,9 @@
 								
 								if(orders[i].status=="1"){
 									str = "待付款";
-//									str2 = "去付款";
-//									cls = "dfk"
+									str2 = "去付款";
+									cls = "dfk";
+									status = "status1"
 									var html = '<section data-id='+orders[i].order_id+'>'+
 												'<div class="section-container">'+
 													'<div class="section-left">商品名称：</div>'+
@@ -169,12 +171,12 @@
 													'<div class="section-right" textover>'+pick_time+'</div>'+
 												'</div>'+
 												'<div class="section-container">'+
-													'<div class="section-left status status1">'+str+'</div>'+
+													'<div class="section-left status '+status+'">'+str+'</div>'+
 													'<div class="section-right">'+
 														'<form class="myForm" action="http://wcphp172.xinhaimobile.cn/ixinhai_pay/pay/group_pay.php" method="post">'+
 															'<input type="text" name="member_id" class="member_id" value="" />'+
 															'<input type="text" name="order_id" class="order_id" value="" />'+
-															'<input type="text" name="return_url" class="return_url" value="http://yhj1.xinhaiip.cn/test/history.html" />'+
+															'<input type="text" name="return_url" class="return_url" value="http://wcphp172.xinhaimobile.cn/xh_internal_bulk/history.html" />'+
 															'<button class="pinjia '+cls+'" data-orderid='+orders[i].order_id+'>'+str2+'</button>'+
 														'</form>'+
 													'</div>'+
@@ -184,23 +186,28 @@
 									if(orders[i].status=="2"){
 										str = "已付款";
 										str2 = "申请退款";
-										cls = "yfk"
+										cls = "yfk";
+										status = "status2"
 									}else if(orders[i].status=="3"){
 										str = "已发货"
 										str2 = "去收货";
-										cls = "yfh"
+										cls = "yfh";
+										status = "status3"
 									}else if(orders[i].status=="4"){
 										str = "已完成"
 										str2 = "去评价";
-										cls = "ywc"
+										cls = "ywc";
+										status = "status4"
 									}else if(orders[i].status=="5"){
 										str = "已评价"
 										str2 = "已评价";
-										cls = "ypj"
+										cls = "ypj";
+										status = "status5"
 									}else if(orders[i].status=="6"){
 										str = "已退款"
 										str2 = "已退款";
-										cls = "ytk"
+										cls = "ytk";
+										status = "status6"
 									}
 									var html = '<section data-id='+orders[i].order_id+'>'+
 												'<div class="section-container">'+
@@ -216,7 +223,7 @@
 													'<div class="section-right" textover>'+pick_time+'</div>'+
 												'</div>'+
 												'<div class="section-container">'+
-													'<div class="section-left status status1">'+str+'</div>'+
+													'<div class="section-left status '+status+'">'+str+'</div>'+
 													'<div class="section-right">'+
 														'<button class="pinjia '+cls+'" data-orderid='+orders[i].order_id+'>'+str2+'</button>'+
 													'</div>'+
@@ -242,8 +249,8 @@
 				})
 				$(".main").on("click",".dfk",function(){
 					var orderId = $(this).data("orderid");
-					$(this).siblings(".member_id").val(member_id);
-					$(this).siblings(".order_id").val(orderId);
+					$(this).siblings(".member_id").attr("value",member_id);
+					$(this).siblings(".order_id").attr("value",orderId);
 
 					$(this).parent().submit();
 //					$.ajax({

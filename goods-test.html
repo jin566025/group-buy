@@ -37,11 +37,11 @@
 	            </div>
 	            <div class="weui-flex">
 				  <div class="weui-flex__item">剩余数量</div>
-				  <div class="weui-flex__item"><a class="surplus_num" id="surplus_num"></a></div>
+				  <div class="weui-flex__item"><a class="surplus_num" id="surplus_num">10</a></div>
 				</div>
 	            <div class="weui-flex weui-flex2">
 				  <div class="weui-flex__item">实际需付</div>
-				  <div class="weui-flex__item"><a class="goods_price" id="goods_price"></a>元</div>
+				  <div class="weui-flex__item"><a class="goods_price" data-price="100" id="goods_price">100</a>元</div>
 				</div>
 				<form id="myForm" action="http://wcphp172.xinhaimobile.cn/ixinhai_pay/pay/group_pay.php" method="post">
 					<input type="text" name="member_id" id="member_id" />
@@ -86,44 +86,7 @@
 			}
 			$(function(){
 				
-				var href = window.location.href.split("?");
-				var goods_id = href[1];
-				var goods_images =href[2].split(",");
-				console.log(goods_images)
-
-				$.ajax({
-					type:"post",
-					url:url_path+"/api/get_good_detail",
-					data:{
-						"member_id":member_id,
-						"goods_id":goods_id
-					},
-					dataType:"json",
-					success:function(data){
-						var surplus_num = sessionStorage.getItem("surplus_num");
-						$(".goods_name").html(data.data.goods_name);
-						$(".goods_price").html(data.data.group_price);
-						$(".goods_price").data("price",data.data.group_price);
-						$("#surplus_num").html(surplus_num);
-					},
-					error:function(){}
-				})
 				
-				for(var i=0;i<goods_images.length;i++){
-					var html = '<div class="swiper-slide swiper-slide">'+
-					            	'<img class="slide-img" src="'+goods_images[i]+'" />'+
-					            '</div>';
-					$(".swiper-wrapper").append(html)
-				}
-				var swiper = new Swiper('.swiper-container', {
-				    pagination: '.swiper-pagination',
-				
-				    paginationClickable: true,
-				    spaceBetween: 30,
-				    centeredSlides: true,
-				    speed:1000,
-				    direction:'horizontal'
-				});
 				
 				var MAX = parseInt(sessionStorage.getItem("surplus_num"));
 				var MIN = 1;
@@ -154,52 +117,7 @@
 			        }
 			        
 		        })
-				$(document).on("click", "#show-confirm", function() {
-					var num = $("#goods_number").val();
-			        $.confirm("您确定要抢购该商品吗?", "确认抢购?", function() {
-			          $.ajax({
-			          	type:"post",
-			          	url:url_path+"/api/add_order",
-			          	data:{
-			          		"member_id":member_id,
-			          		"goods_id":goods_id,
-			          		"num":num
-			          	},
-			          	dataType:"json",
-			          	success:function(data){
-			          			          		
-			          		
-			          		if(data.error_msg=="成功"){
-			          			var order_id = data.data.order_id;
-//			          			document.getElementById("member_id").defaultValue=member_id;
-//			          			document.getElementById("order_id").defaultValue=order_id;
-			          			$("#member_id").attr("value",member_id);
-			          			$("#order_id").attr("value",order_id);
-			          			$("#myForm").submit();
-//			          			$.ajax({
-//			          				type:"post",
-//			          				url:url_path+"/api/prepay",
-//			          				data:{
-//			          					"member_id":member_id,
-//			          					"order_id":order_id,
-//			          					"return_url":"history.html"
-//			          				},
-//			          				dataType:"json",
-//			          				success:function(data){
-//			          					console.log(data)
-//			          				},
-//			          				error:function(){}
-//			          			});
-			          		}else if(data.error_code==1){
-			          			alert(data.error_msg)
-			          		}
-			          	},
-			          	error:function(){}
-			          })
-			        }, function() {
-			          //取消操作
-			        });
-		        });
+				
 			})
 		</script>
 		<script>
